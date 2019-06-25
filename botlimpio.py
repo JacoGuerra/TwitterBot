@@ -16,16 +16,8 @@ import keys
 # from this main file.
 # Please refer to keys_format.py to see the format.
 
-# with PythonAnywhere's always-on task.
-# More info: https://help.pythonanywhere.com/pages/AlwaysOnTasks/
 
-
-#ends_with(suffix, start=0, end=9223372036854775807)
-#Returns True if the blob ends with the given suffix.
-#
-#endswith(suffix, start=0, end=9223372036854775807)
-#Returns True if the blob ends with the given suffix.
-print('this is my twitter bot')
+print('Empezando')
 
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -109,7 +101,6 @@ class replier(Thread):
             print("1 secondswaited after retrieving and replying to tweets.. ")
             
     
-            # DEV NOTE: use 1060651988453654528 for testing.
             last_seen_id = self.retrieve_last_seen_id(self.FILE_NAME)
             # NOTE: We need to use tweet_mode='extended' below to show
             # all full tweets (with full_text). Without it, long tweets
