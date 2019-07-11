@@ -13,8 +13,8 @@ import keys
 import log
 import csv
 
-auth = tweepy.OAuthHandler(keys.CONSUMER_KEY, keys.CONSUMER_SECRET)
-auth.set_access_token(keys.ACCESS_KEY, keys.ACCESS_SECRET)
+auth = tweepy.OAuthHandler(keys.Consumer_Key_Following, keys.CONSUMER_SECRET_Following)
+auth.set_access_token(keys.ACCESS_KEY_Following, keys.ACCESS_SECRET_Following)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
 
@@ -52,15 +52,13 @@ class following(Thread):
 #            print(f'Processed {line_count} lines.')
     
     
-    
     def follow(self):
         while True:
-            log.log("dentro de follow") 
+            log.log("dentro de  def follow(self):") 
             last_seen_id = self.retrieve_last_seen_id(self.FILE_NAME)
             lasttweets=api.home_timeline(since_id=last_seen_id, tweet_mode='extended', count=1)
-            
             for tweet in reversed(lasttweets) :
-                lista=api.user_timeline(screen_name=tweet.user.screen_name, count=1)
+                lista=api.user_timeline(screen_name=tweet.user.screen_name, count=10)
                 for lista in lista:
                     followers=lista.user.followers_count
                     log.log(followers)

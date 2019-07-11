@@ -4,13 +4,13 @@ Created on Thu Jul  4 20:15:21 2019
 
 @author: Inki
 """
+from threading import Thread
 import tweepy
 import time
 from textblob import TextBlob
 import random 
 import keys
 import log
-import StoppableThread
 
 
 
@@ -18,7 +18,7 @@ auth = tweepy.OAuthHandler(keys.CONSUMER_KEY, keys.CONSUMER_SECRET)
 auth.set_access_token(keys.ACCESS_KEY, keys.ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
-class retweets(StoppableThread):
+class retweets(Thread):
     FILE_NAME = 'RTlast_seen_id.txt'
     log.log("dentro de retweets")
     

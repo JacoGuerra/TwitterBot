@@ -16,4 +16,4 @@ def log(something):
     try:
         logging.info(something)
     except:
-        logging.info("error evitado...")
+        print("error evitado...")

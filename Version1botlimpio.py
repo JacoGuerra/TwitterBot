@@ -11,8 +11,10 @@ import retweets
 import following
 #import remove
 
-parar =remove.remove()
-parar.start()
+#parar =remove.remove()
+#parar.start()
+
+log.log("INICIANDO.......................................")
 
 postear=randomposting.randomposting()
 postear.start()  
@@ -26,4 +28,3 @@ reposts.start()
 seguir=following.following()
 seguir.start()
 
-log.log("Prueba 1")
