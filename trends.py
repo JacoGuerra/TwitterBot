@@ -37,10 +37,16 @@ def trends_place():
 #                 lng = TextBlob(b)
 #                 time.sleep(0.2)
 #                 if lng.detect_language()=="es" or lng.detect_language()=="en":
-                 a=(i["name"])
+                 a=i["name"]
                  a=api.search(a)
                  b=a.pop
-                 print(b().text)
+#                 print(b().text)
+                 """De aqui voy a desviar al resto de modulos!
+                 los ejecuto con following(b) por ejempllo"""
+                 followers=b().user.followers_count
+                 name=b().user.screen_name
+                 valor=(followers)/(500)
+                 print("Con {0} followers, Valor {1} para seguir a {2}".format(followers, valor, name ))
 def searchs():                 
     a=api.search(trends_place())
     b=a.pop
