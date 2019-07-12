@@ -11,7 +11,7 @@ import time
 import random 
 import keys
 import log
-import csv
+
 
 auth = tweepy.OAuthHandler(keys.Consumer_Key_Following, keys.CONSUMER_SECRET_Following)
 auth.set_access_token(keys.ACCESS_KEY_Following, keys.ACCESS_SECRET_Following)
@@ -50,29 +50,46 @@ class following(Thread):
 #                    print(f'\t{row[0]} works in the {row[1]} department, and was born in {row[2]}.')
 #                    line_count += 1
 #            print(f'Processed {line_count} lines.')
-    
-    
+
     def follow(self):
         while True:
             log.log("dentro de  def follow(self):") 
             last_seen_id = self.retrieve_last_seen_id(self.FILE_NAME)
-            lasttweets=api.home_timeline(since_id=last_seen_id, tweet_mode='extended', count=1)
+#            lasttweets=api.home_timeline(since_id=last_seen_id, tweet_mode='extended', count=1)
+            lasttweets=api.home_timeline(tweet_mode='extended', count=3)
+            log.log(lasttweets)
             for tweet in reversed(lasttweets) :
                 lista=api.user_timeline(screen_name=tweet.user.screen_name, count=10)
+                log.log(lista)
+                count=0
+                valoraciontotal=0
                 for lista in lista:
+                    log.log(lista.text)
                     followers=lista.user.followers_count
-                    log.log(followers)
                     valor=(followers)/random.randint(1,500)
                     log.log("Con {0} followers, Valor {1} para seguir a {2}".format(followers, valor, lista.user.screen_name))
-                    if valor >= 10000:
+                    count += 1
+                    valoraciontotal+=valor
+                    
+                    if valor >= 2000:
                                 api.create_friendship(screen_name=lista.user.screen_name)
                                 log.log("Seguido a {0}".format(lista.user.screen_name))
-                                time.sleep(random.randint(5, 120))
+#                                time.sleep(random.randint(5, 120))
                                 last_seen_id = tweet.id
                                 self.store_last_seen_id(last_seen_id, self.FILE_NAME)
                     else:
-                        last_seen_id = tweet.id
-                        self.store_last_seen_id(last_seen_id, self.FILE_NAME)
                         log.log("No seguido a {0}".format(lista.user.screen_name))
-        
+                media=valoraciontotal/count
+                log.log("Media de valores {0} para {1} muestras".format(media, count))
+                last_seen_id = tweet.id
+                self.store_last_seen_id(last_seen_id, self.FILE_NAME)
+                
+                        
+#
+#    def follow(self):
+#        while True:
+#            last_seen_id = self.retrieve_last_seen_id(self.FILE_NAME)
+#            lasttweets=api.home_timeline(since_id=last_seen_id, tweet_mode='extended', count=1)
+#            for tweet in reversed(lasttweets) :
+#        
                          
