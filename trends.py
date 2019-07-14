@@ -11,9 +11,14 @@ import keys
 import log
 import json
 #from textblob import TextBlob
+import random 
+import follow
+import pickle 
+import codecs
 
-auth = tweepy.OAuthHandler(keys.Consumer_Key_Following, keys.CONSUMER_SECRET_Following)
-auth.set_access_token(keys.ACCESS_KEY_Following, keys.ACCESS_SECRET_Following)
+
+auth = tweepy.OAuthHandler(keys.Consumer_Key_Trends, keys.CONSUMER_SECRET_Trends)
+auth.set_access_token(keys.ACCESS_KEY_Trends, keys.ACCESS_SECRET_Trends)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
 #data= json.loads(api.trends_available())
@@ -23,36 +28,63 @@ def lookingforplaces():
         woeid=i["woeid"]
         suma=name, woeid
         log.log(suma)
+
         
-def trends_place():
+        
+def trendingtweets():
     
     places={
         "United States": 23424977,
         'Spain': 23424950
         }
+    lista={}
     for value in places.values():
          for a in api.trends_place(value):
              for i in a["trends"]:
-#                 b=i["name"]
-#                 lng = TextBlob(b)
-#                 time.sleep(0.2)
-#                 if lng.detect_language()=="es" or lng.detect_language()=="en":
                  a=i["name"]
                  a=api.search(a)
-                 b=a.pop
-#                 print(b().text)
-                 """De aqui voy a desviar al resto de modulos!
-                 los ejecuto con following(b) por ejempllo"""
-                 followers=b().user.followers_count
-                 name=b().user.screen_name
-                 valor=(followers)/(500)
-                 print("Con {0} followers, Valor {1} para seguir a {2}".format(followers, valor, name ))
-def searchs():                 
-    a=api.search(trends_place())
-    b=a.pop
-    print(b()._json.id)
-    
-trends_place()  
+                 try:
+                     b=a.pop
+                     lista.append(b())
+                 except:
+                    continue
+                
+#    with codecs.open("trendsinfo.txt", 'w', encoding='utf8') as f:
+#          f.write(str(lista))
+          
+    with open('trendsinfo.pkl', "wb") as f:
+         pickle.dump((lista), f)
+                 
+                 
+                 
+                 
+def following():
+     with open('trendsinfo.pkl', "rb") as f:
+         b = pickle.load(f)
+
+         print(b)
+#         followers=b.followers_count
+#         if followers > 1000 and followers < 1000000 :
+#         
+#             valor=(b.followers_count)/random.randint(1,50)   
+#             print("Con {0} followers, Valor {1} para seguir a {2}".format
+#             (followers, valor, b.screen_name ))
+#             if valor >= 2000:
+#                 api.create_friendship(screen_name=b.screen_name)
+#                 print("Seguido a {0}".format(b.screen_name))              
+#                         
+#                 """De aqui voy a desviar al resto de modulos!
+#                 los ejecuto con following(b) por ejempllo
+#                 
+#                 Tengo que aprender tambien a descartar resultados!
+#                 """
+                 
+                     
+                     
+
+
+
+following()  
 #log.log(a)
 #lookingforplaces()
 ## 
