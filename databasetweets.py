@@ -8,15 +8,15 @@ Created on Sun Jul 14 17:01:45 2019
 #building a database
 
 import sqlite3
-                
+
 #timeframe =  date.today()
 sql_transaction = []
 start_row = 4000000
 cleanup = 16000000
 
-connection = sqlite3.connect('trendstweets.db')
-c = connection.cursor() 
-   
+connection = sqlite3.connect('trendstweetsssss.db')
+c = connection.cursor()
+
 def create_table():
     c.execute("""CREATE TABLE Tweets (
                      Screen_name text,
@@ -25,15 +25,17 @@ def create_table():
                      Tweet_text text,
                      Hastags text,
                      Tweet.id text,
-                     Retweet_count text,                   
+                     Retweet_count text,
                      Favorite_count text,
                      Lang text,
                      Date text
-            )""")       
-    
-    connection.commit()
-    
-    connection.close()
+            )""")
 
-      
-                 
+#    https://www.youtube.com/watch?v=pd-0G0MigUA viendo este video sobre bases de datos  sasa
+
+#Intentar guardar comentarios de tweets o al menps duplicados pra las respuestas del bot!!
+#    connection.commit()
+#
+#    connection.close()
+
+create_table()
