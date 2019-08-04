@@ -14,25 +14,28 @@ This is an example showing how to create an export file from
 an existing chat bot that can then be used to train other bots.
 '''
 
-chatbot = ChatBot('Export Example Bot',
+chatbot = ChatBot(
+        'AlphaBot',
       storage_adapter='chatterbot.storage.SQLStorageAdapter',
-    logic_adapters=[
+      database_uri='sqlite:///database.sqlite3',
+      logic_adapters=[
         'chatterbot.logic.MathematicalEvaluation',
 #        'chatterbot.logic.TimeLogicAdapter',
         'chatterbot.logic.BestMatch'
     ],
-#    database_uri='sqlite:///database.sqlite3'
+#
 )
 
 ## First, lets train our bot with some data
-#trainer = ChatterBotCorpusTrainer(chatbot)
+trainer = ChatterBotCorpusTrainer(chatbot)
 #
-#trainer.train('chatterbot.corpus.english')
+trainer.train('chatterbot.corpus.english')
 #
 ## Now we can export the data to a file
-#trainer.export_for_training('./my_export.json')
+trainer.export_for_training('./database.sqlite3.db')
 
-
+trainer1=chatterbot.trainers.UbuntuCorpusTrainer(chatbot)
+trainer1.train()
 
 def get_feedback():
 
@@ -57,7 +60,7 @@ while True:
             response.text,
             input_statement.text
         ))
-        if get_feedback()== False:
+        if get_feedback()is False:
             print('please input the correct one')
             correct_response = Statement(text=input())
             chatbot.learn_response(correct_response, input_statement)
